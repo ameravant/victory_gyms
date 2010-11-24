@@ -58,7 +58,7 @@
 
 %h1= yield(:meta_title).strip
 
-== Instructed by #{ link_to( @event.instructor.name, '/profiles/'+@event.instructor.profile.permalink) }
+= link_to_instructor_if_exists(@event.instructor)
 
 = ninja_parse(@event.description)
 
