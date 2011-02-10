@@ -1,0 +1,113 @@
+<%- 
+if @page
+  @menu = @page.menus.first unless @menu
+end
+-%>
+
+<%- 
+@menu = Menu.first unless @menu
+temp_menu = @menu
+menu_tree = []
+top_menu = nil
+
+while top_menu.nil?
+  menu_tree << temp_menu.id
+  if temp_menu.parent_id.nil?
+    top_menu = temp_menu
+  else
+    temp_menu = @menus.detect { |menu_page| menu_page.id == temp_menu.parent_id }
+  end
+end
+
+menu_tree.reverse!
+@menus = Menu.all
+-%>
+<%- if @cms_config['site_settings']['dropdown_menu']%>
+
+<%- else -%>
+  <div id="menu-outer"><div id="menu-middle"<%= " class=\"with-logo\"" if  @cms_config['website']['logo_position'] == "menu" %>>
+    <%- if @cms_config['website']['logo_position'] == "menu" -%>
+        <%- unless @settings.logo_file_name.blank? -%>
+          <%= link_to(image_tag(@settings.logo(:original), :alt => @cms_config['website']['name'], :title => @cms_config['website']['name']), root_path, :id => "logo") %>
+        <%- else -%>
+          <%= link_to image_tag("/images/logo.png", :alt => @cms_config['website']['name']), root_path, :id => "logo" %>
+        <%- end -%>
+    <%- end -%>
+    <ul id="menu-inner">
+    <%- for menu in @menus.reject { |menu_page| menu_page.parent_id or menu_page.hidden? } -%>
+      <%- case menu.navigatable.permalink -%>
+        <%- when "blog"-%>
+          <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['blog_title'], "/#{path_safe(@cms_config['site_settings']['blog_title'])}" %></li>
+        <%- when "events"-%>
+          <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['events_title'], "/#{path_safe(@cms_config['site_settings']['events_title'])}" %></li>
+        <%- when "links"-%>
+          <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['links_title'], "/#{path_safe(@cms_config['site_settings']['links_title'])}" %></li>
+        <%- else -%>
+          <%- if menu.navigatable_type == "Page" -%>
+            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, "/#{menu.navigatable.permalink}" %></li>
+          <%- else -%>
+            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, menu.navigatable %></li>
+          <%- end -%>
+      <%- end -%>
+    <%- end -%>
+    </ul>
+  </div></div>
+  <%= clear %>
+  <%- content_for :submenu do -%>
+  <%= clear %>
+    <div class="submenu-outer">
+      <%- menu_tree.each_with_index do |current_tree, i| -%>
+          <%- siblings = @menus.reject { |menu_page| menu_page.parent_id != current_tree or menu_page.hidden? } -%>
+          <%- unless siblings.empty? -%>
+            <%- if i == 1 and @cms_config['site_settings']['third_level_menu'] == "left" -%>
+              <%- content_for :side_column_2 do -%>
+                <ul class="submenu-inner">
+                     <%- for menu in siblings -%>
+                        <%- case menu.navigatable.permalink -%>
+                          <%- when "blog"-%>
+                            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['blog_title'], "/#{path_safe(@cms_config['site_settings']['blog_title'])}" %></li>
+                          <%- when "events"-%>
+                            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['events_title'], "/#{path_safe(@cms_config['site_settings']['events_title'])}" %></li>
+                          <%- when "links"-%>
+                            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['links_title'], "/#{path_safe(@cms_config['site_settings']['links_title'])}" %></li>
+                          <%- when menu.navigatable_type == "Page" -%>
+                          <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, "/#{page.permalink}" %></li>
+                          <%- else -%>
+                            <%- if menu.navigatable_type == "Page" -%>
+                              <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, "/#{menu.navigatable.permalink}" %></li>
+                            <%- else -%>
+                              <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, menu.navigatable %></li>
+                            <%- end -%>
+                        <%- end -%>
+                    <%- end -%>
+                </ul>
+                <%= clear %>
+              <%- end -%>
+            <%- else -%>
+              <div class="submenu-middle"><ul class="submenu-inner" id="submenu-<%= i+1 %>">
+                <%- for menu in siblings -%>
+                        <%- case menu.navigatable.permalink -%>
+                          <%- when "blog"-%>
+                            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['blog_title'], "/#{path_safe(@cms_config['site_settings']['blog_title'])}" %></li>
+                          <%- when "events"-%>
+                            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['events_title'], "/#{path_safe(@cms_config['site_settings']['events_title'])}" %></li>
+                          <%- when "links"-%>
+                            <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to @cms_config['site_settings']['links_title'], "/#{path_safe(@cms_config['site_settings']['links_title'])}" %></li>
+                          <%- when menu.navigatable_type == "Page" -%>
+                          <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, "/#{page.permalink}" %></li>
+                          <%- else -%>
+                            <%- if menu.navigatable_type == "Page" -%>
+                              <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, "/#{menu.navigatable.permalink}" %></li>
+                            <%- else -%>
+                              <li <%= "class=\"selected\"" if top_menu == menu %>><%= link_to menu.navigatable.title, menu.navigatable %></li>
+                            <%- end -%>
+                        <%- end -%>
+                    <%- end -%>
+              </ul></div>
+            <%- end -%>
+          <%- end -%>
+      <%- end -%>
+    </div>
+    <%= clear %>
+  <%- end -%>
+<%- end -%>
