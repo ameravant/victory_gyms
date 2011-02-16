@@ -75,10 +75,22 @@
       = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/jquery.timers-1.1.2.js"
       = javascript_include_tag "/plugin_assets/siteninja_core/javascripts/ninja_slideshow.js"
     = stylesheet_link_tag "/plugin_assets/siteninja_core/stylesheets/print.css", :media => "print"
+    - if @cms_config['site_settings']['dropdown_menus']
+      = javascript_include_tag "/plugin_assets/victory_gyms/javascripts/ddsmoothmenu.js"
+      = stylesheet_link_tag "/plugin_assets/victory_gyms/javascripts/ddsmoothmenu.css"
+      :javascript
+        ddsmoothmenu.init({
+        mainmenuid: "menu-middle", //menu DIV id
+        orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+        classname: 'ddsmoothmenu', //class added to menu's outer DIV
+        //customtheme: ["#1c5a80", "#18374a"],
+        contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+        })
     - if !@settings.favicon_file_name.blank?
       %link{:rel => "shortcut icon", :href => @settings.favicon(:original)}    
     = yield :head # For scripts and styles specific to view
     = yield :styles
+    = @cms_config['site_settings']['head_script']
     - if @content_for_onload
       %script{:type => "text/javascript"}
         Event.observe(window, 'load', function() {
@@ -107,10 +119,10 @@
                     = link_to(image_tag("/plugin_assets/victory_gyms/images/victory-gyms.png", :alt => "Victory MMA and Fitness", :title => "Victory MMA and Fitness", :id => "victory-title"), "/")
                   #header-links
                     = link_to(image_tag("/plugin_assets/victory_gyms/images/facebook-button.gif", :alt => "Facebook"), "http://www.facebook.com")
-                    = link_to(image_tag("/plugin_assets/victory_gyms/images/twitter-button.gif", :alt => "Twitter"), "http://www.twitter.com")
-                    = link_to(image_tag("/plugin_assets/victory_gyms/images/youtube-button.gif", :alt => "YouTube"), "/article.rss")
+                    = link_to(image_tag("/plugin_assets/victory_gyms/images/twitter-button.gif", :alt => "Twitter"), "http://www.twitter.com/victory_mma_bjj")
+                    = link_to(image_tag("/plugin_assets/victory_gyms/images/youtube-button.gif", :alt => "YouTube"), "http://www.youtube.com/throwdownelitesd")
                     = link_to(image_tag("/plugin_assets/victory_gyms/images/shop-online-button.gif", :alt => "Shop Online"), "/products", :id => "shop-online")
-                    = link_to(image_tag("/plugin_assets/victory_gyms/images/send-info-button.png", :alt => "Send Franchise Information"), "/products", :id => "send-info")
+                    = link_to(image_tag("/plugin_assets/victory_gyms/images/send-info-button.png", :alt => "Send Franchise Information"), "/application", :id => "send-info")
                   = clear if @admin
                 - if !@settings.header_right_file_name.blank? and !@admin
                   #header-right
