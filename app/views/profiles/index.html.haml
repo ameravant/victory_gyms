@@ -1,0 +1,22 @@
+%div#member-index
+  %h1 Profiles
+  %ul
+    -for person in @profiles
+      %li
+        .profile-thumb-image
+          - unless person.avatar_file_name == nil
+            = link_to(image_tag(person.avatar.url(:medium), :alt => "Profile photo for %s" % person.name, :title => "Profile photo for %s" % person.name), person.profile) unless person.avatar.url.blank?
+        .profile-description
+          %h2= link_to(person.name, person.profile)
+          %p
+            = person.profile.short_description
+            = ("#{pluralize(person.comments_count, "Comment")}" if person.comments_count > 0) + ", " if person.comments_count > 0 and person.articles_count > 0
+            = "#{pluralize(person.articles_count, "Articles")}" if person.articles_count > 0
+        = clear
+= render :partial => "side_column"
+
+= render :partial => "pages/sidebar"
+
+- content for :head do
+  %style{:type => "text/css"}
+    div#profile-thumb-image { float: left; margin: 0 20px 0 0 ; }
