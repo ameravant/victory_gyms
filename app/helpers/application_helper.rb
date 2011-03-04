@@ -121,10 +121,10 @@ module ApplicationHelper
         when "links"
           concat link_to @cms_config['site_settings']['links_title'], "/#{path_safe(@cms_config['site_settings']['links_title'])}"
         else
-          if menu.navigatable_type == "Page"
-            concat link_to menu.navigatable.title, "/#{menu.navigatable.permalink}"
+          if child.navigatable_type == "Page"
+            concat link_to child.navigatable.title, "/#{child.navigatable.permalink}"
           else
-            concat link_to menu.navigatable.title, menu.navigatable
+            concat link_to child.navigatable.title, child.navigatable
           end
         end
         build_dropdown_menu(child.id)
