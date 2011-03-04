@@ -113,7 +113,20 @@ module ApplicationHelper
       # call build_menu for their children.
       for child in children
         concat "<li>"
-        concat link_to(h(child.navigatable.title), [child.navigatable])
+        case child.navigatable.permalink
+        when "blog"
+          concat link_to @cms_config['site_settings']['blog_title'], "/#{path_safe(@cms_config['site_settings']['blog_title'])}"
+        when "events"
+          concat link_to @cms_config['site_settings']['events_title'], "/#{path_safe(@cms_config['site_settings']['events_title'])}"
+        when "links"
+          concat link_to @cms_config['site_settings']['links_title'], "/#{path_safe(@cms_config['site_settings']['links_title'])}"
+        else
+          if menu.navigatable_type == "Page"
+            concat link_to menu.navigatable.title, "/#{menu.navigatable.permalink}"
+          else
+            concat link_to menu.navigatable.title, menu.navigatable
+          end
+        end
         build_dropdown_menu(child.id)
         concat "</li>"
       end
