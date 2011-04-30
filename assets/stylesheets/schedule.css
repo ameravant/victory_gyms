@@ -1,0 +1,15 @@
+.schedule {background:#dadada; padding:.5em; border:1px solid gray;}
+.schedule h1 {color:#961712; font-size:1.2em;}
+.schedule h1 a { float:right; border:none; text-decoration:none; font-size:80%; color:#053f6d;}
+.schedule table {width:100%; border:1px solid #d6d6d6; background:#fefefe; border-top:3px solid #d6d6d6;}
+.schedule table tr.header{border-bottom:1px solid #d6d6d6; color:black;}
+.schedule table tr, #schedule table td {width:100%;padding:.2em; margin:0;}
+.schedule table td.date {color:black;padding:.2em;padding-top:0;padding-left:.5em; width:5em;}
+.schedule table td.class-name {color:black; padding:.2em;padding-left:.5em;  border-left:1px solid #d6d6d6;}
+.schedule .even {background:#f7f7f7;}
+.schedule .odd {background:white;}
+.schedule table th{border-bottom:1px solid #d6d6d6; background:url(/plugin_assets/victory_gyms/images/schedule-header-bg.png) repeat-x;}
+.schedule table th.class-name {border-left:1px solid #d6d6d6;}
+.schedule table td.class-name a {border:none; color:black;}
+ul.class-schedule li {width:31%;margin:.3em;float:left;list-style-type:none;}
+ul.class-schedule {width:100%; margin:0; padding:0;float:left; clear:left;}

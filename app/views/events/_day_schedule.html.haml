@@ -1,0 +1,14 @@
+.schedule
+  %h1
+    = title
+    = link_to "View All", "/class-schedule" unless @page.permalink == "class-schedule"
+  %table
+    %tr.header
+      %th.time Time
+      %th.class-name Class Name
+    - for event in events
+      %tr.top-row[event]{ :class => cycle('odd','even') }
+        %td.date= event.format_time_for_schedule
+        %td.class-name
+          = link_to event.name, event_path(event)
+          %span= link_to " - " + event.instructor.name, profile_path(event.instructor.profile.permalink) unless @person

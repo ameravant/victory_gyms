@@ -1,0 +1,6 @@
+- count = ColumnSectionType.find_by_partial_name("events_for_side_column").default_count if count.blank?
+- events ||= Event.find_for_days_from_now(0)
+- content_for :side_column do
+  .side-column-section
+    = render :partial => 'events/day_schedule', :locals => {:events => events, :title => title}
+    
