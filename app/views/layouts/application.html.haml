@@ -70,9 +70,15 @@
     
     - # Include galleryview for slideshow if one is used.
     - if @slideshow
-      = stylesheet_link_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/galleryview.css"
-      = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/jquery.galleryview-1.1.js"
-      = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/jquery.timers-1.1.2.js"
+      - if @cms_config['site_settings']['wide_feature_box']
+        = stylesheet_link_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/galleryview.css"
+        = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/jquery.galleryview-1.1.js"
+        = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-1.1/jquery.timers-1.1.2.js"
+        = javascript_include_tag "/plugin_assets/siteninja_core/javascripts/ninja_slideshow.js"
+      - else
+        = stylesheet_link_tag "/plugin_assets/siteninja_core/jquery-galleryview-3.0b3/css/jquery.galleryview-3.0.css"
+        = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-3.0b3/js/jquery.galleryview-3.0.js"
+        = javascript_include_tag "/plugin_assets/siteninja_core/jquery-galleryview-3.0b3/js/jquery.timers-1.2.js"
       = javascript_include_tag "/plugin_assets/siteninja_core/javascripts/ninja_slideshow.js"
     = stylesheet_link_tag "/plugin_assets/siteninja_core/stylesheets/print.css", :media => "print"
     - if @cms_config['site_settings']['dropdown_menus']
