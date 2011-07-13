@@ -190,4 +190,5 @@
 
     - if Rails.env.production? and !@admin and !@settings.tracking_code.blank?
       = @settings.tracking_code
+    = yield :pre_footer
   = yield :footer if @content_for_footer
