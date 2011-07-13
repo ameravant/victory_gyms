@@ -115,7 +115,7 @@
         Event.observe(window, 'load', function() {
         = yield :onload
         });
-  %body{:id => (@admin ? "admin" : "public"), :onload => "ImageBook()"}
+  %body{:id => (@admin ? "admin" : "public")}
     = #debug Draft.first
     - #parsed_json = ActiveSupport::JSON.decode(Draft.first.draft_fields)
     = #debug parsed_json.values.first
