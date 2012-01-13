@@ -64,19 +64,19 @@
           div#admin-menu { background: #333 !important; position: relative; }
           div#top-margin { height: 70px; }
         <![endif]--> 
-    - unless @settings.stylesheet.blank?
-      -if controller_name == "sessions"
-        %style{:type => "text/css"}
-          = @settings.stylesheet
+    - if @tmplate
+      - if !@tmplate.stylesheet.blank?
+        = stylesheet_link_tag "/templates/#{@tmplate.id}/stylesheet.css"
+      - elsif !@global_template.stylesheet.blank?
+        = stylesheet_link_tag "/templates/#{@global_template.id}/stylesheet.css"
       -else
-        = stylesheet_link_tag "/stylesheet.css"
-    - else
-      - unless session[:template]
-        = #stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{@cms_config['website']['template']}"
-        = stylesheet_link_tag "victorygyms"
-      - else
-        = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{session[:template]}"
-    = stylesheet_link_tag "/stylesheet/additional_styles.css" unless @settings.additional_styles.blank?
+        - unless session[:template]
+          = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{@cms_config['website']['template']}"
+        - else
+          - unless session[:template]
+            = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{@cms_config['website']['template']}"
+          - else
+            = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{session[:template]}"
     
     - # Include galleryview for slideshow if one is used.
     - if @slideshow
