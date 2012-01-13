@@ -77,6 +77,24 @@
             = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{@cms_config['website']['template']}"
           - else
             = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{session[:template]}"
+    - elsif !@global_template.stylesheet.blank?
+      -if controller_name == "sessions"
+        %style{:type => "text/css"}
+          = @global_template.stylesheet
+      -else
+        = stylesheet_link_tag "/templates/#{@global_template.id}/stylesheet.css"
+    - else
+      - unless session[:template]
+        = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{@cms_config['website']['template']}"
+      - else
+        = stylesheet_link_tag "/plugin_assets/siteninja_core/templates/#{session[:template]}"
+    - if @tmplate
+      - if !@tmplate.additional_styles.blank?
+        = stylesheet_link_tag "/templates/#{@tmplate.id}/additional_styles.css"
+      - elsif !@global_template.additional_styles.blank?
+        = stylesheet_link_tag "/templates/#{@global_template.id}/additional_styles.css"
+    - elsif !@global_template.additional_styles.blank?
+      = stylesheet_link_tag "/templates/#{@global_template.id}/additional_styles.css"
     
     - # Include galleryview for slideshow if one is used.
     - if @slideshow
