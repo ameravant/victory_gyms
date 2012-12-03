@@ -7,9 +7,11 @@
       %meta{:name => "description", :content => yield(:meta_description).strip }
     - # This rather lengthy section of the head includes all javascripts and stylesheets used throughout the application, included depending upon specific conditions of the view
     - # Include jQuery and jQuery Tools
-    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"
+    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"
+    = javascript_include_tag "/plugin_assets/siteninja_core/javascripts/jquery.touchwipe.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"
-    = javascript_include_tag "/plugin_assets/siteninja_core/javascripts/animatedcollapse.js"
+    = javascript_include_tag "http://s3.amazonaws.com/siteninja/plugin_assets/siteninja_core/javascripts/animatedcollapse.js"
+    <script src="/plugin_assets/siteninja_core/javascripts/respond.min.js" type="text/javascript"></script><!-- Support for media queries (min-width and max-width only) in < IE9 -->
     = #javascript_include_tag "http://cdn.jquerytools.org/1.0.2/jquery.tools.min.js"
     = #javascript_include_tag "http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js"
     - if @calendar_select
